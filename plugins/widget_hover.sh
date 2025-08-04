@@ -1,11 +1,14 @@
 #!/bin/bash
 
+# Source variables for consistent sizing
+source "$HOME/.config/sketchybar/variables.sh"
+
 # Universal hover effects for right-side widgets
 case "$SENDER" in
   "mouse.entered")
     sketchybar --animate elastic 20 \
                --set $NAME background.color=0xff45475a \
-                           background.height=32 \
+                           background.height=$((WIDGET_HEIGHT - 4)) \
                            background.border_color=0xff74c7ec \
                            background.border_width=2 \
                            background.shadow.distance=6 \
@@ -16,7 +19,7 @@ case "$SENDER" in
   "mouse.exited")
     sketchybar --animate elastic 20 \
                --set $NAME background.color=0xff313244 \
-                           background.height=30 \
+                           background.height=$((WIDGET_HEIGHT - 6)) \
                            background.border_color=0xff45475a \
                            background.border_width=1 \
                            background.shadow.distance=3 \

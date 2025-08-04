@@ -3,22 +3,23 @@
 # Emoji fallback for apps that don't have real icons available
 case "$1" in
 # Browsers - More distinctive
-"Arc") echo "🌈";;
-"Safari") echo "🧭";;
-"Firefox") echo "🔥";;
+"Arc") echo "󰖟";;
+"Safari") echo "󰀹";;
+"Firefox") echo "󰈹";;
 "Google Chrome") echo "󰊯";;
-"Chromium") echo "🔵";;
-"Edge") echo "🌊";;
-"Brave Browser") echo "🦁";;
-"Opera") echo "🎭";;
+"Chromium") echo "󰊯";;
+"Edge") echo "󰇩";;
+"Brave Browser") echo "󰖟";;
+"Opera") echo "󰒋";;
 
 # Terminals - More distinctive
 "Terminal") echo "";;
 "iTerm2") echo "";;
 "Ghostty") echo "👻";;
-"Alacritty") echo "🚀";;
+"ghostty") echo "👻";;
+"Alacritty") echo "⚡";;
 "Kitty") echo "🐱";;
-"Warp") echo "🌀";;
+"Warp") echo "🚀";;
 "Hyper") echo "⚡";;
 
 # Code Editors - Better visual distinction
@@ -27,70 +28,70 @@ case "$1" in
 "Xcode") echo "";;
 "Vim") echo "";;
 "Neovim") echo "";;
-"Sublime Text") echo "🟠";;
-"Atom") echo "⚛️";;
-"IntelliJ IDEA") echo "🧠";;
-"WebStorm") echo "🌐";;
-"PyCharm") echo "🐍";;
-"Android Studio") echo "🤖";;
-"Cursor") echo "🎯";;
+"Sublime Text") echo "";;
+"Atom") echo "";;
+"IntelliJ IDEA") echo "";;
+"WebStorm") echo "";;
+"PyCharm") echo "";;
+"Android Studio") echo "󰃄";;
+"Cursor") echo "";;
 
 # System - More recognizable
-"Finder") echo "";;
-"System Preferences") echo "";;
-"System Settings") echo "";;
-"Activity Monitor") echo "";;
-"Console") echo "";;
+"Finder") echo "📁";;
+"System Preferences") echo "⚙️";;
+"System Settings") echo "⚙️";;
+"Activity Monitor") echo "📊";;
+"Console") echo "💻";;
 "Disk Utility") echo "💾";;
 "Keychain Access") echo "🔐";;
 
 # Media - Better visual appeal
-"Spotify") echo "";;
-"Music") echo "";;
-"Apple Music") echo "";;
-"YouTube Music") echo "🎥";;
-"SoundCloud") echo "☁️";;
+"Spotify") echo "🎵";;
+"Music") echo "🎵";;
+"Apple Music") echo "🎵";;
+"YouTube Music") echo "󰗠";;
+"SoundCloud") echo "";;
 "VLC") echo "󰕼";;
-"IINA") echo "🎬";;
+"IINA") echo "";;
 "QuickTime Player") echo "";;
 "Final Cut Pro") echo "";;
 "Logic Pro") echo "";;
-"GarageBand") echo "🎸";;
+"GarageBand") echo "";;
 
 # Communication - More expressive
 "Discord") echo "󰙯";;
 "Slack") echo "󰒱";;
 "Telegram") echo "";;
 "WhatsApp") echo "";;
-"Signal") echo "🔒";;
-"Messages") echo "💬";;
-"FaceTime") echo "📹";;
+"Signal") echo "";;
+"Messages") echo "";;
+"FaceTime") echo "";;
 "Zoom") echo "";;
 "Microsoft Teams") echo "󰊻";;
-"Skype") echo "📞";;
+"Skype") echo "";;
 
 # Productivity - Cleaner icons
 "Mail") echo "";;
 "Calendar") echo "";;
 "Notes") echo "";;
-"Reminders") echo "✅";;
-"Contacts") echo "👤";;
+"Reminders") echo "";;
+"Contacts") echo "";;
 "Raycast") echo "󰍉";;
-"Alfred") echo "🎩";;
-"Spotlight") echo "🔍";;
+"Alfred") echo "";;
+"Spotlight") echo "";;
 
 # Development - More specific
-"Docker") echo "";;
-"Docker Desktop") echo "";;
-"Postman") echo "󰛮";;
-"Insomnia") echo "😴";;
+"Docker") echo "🐳";;
+"Docker Desktop") echo "🐳";;
+"Postman") echo "📡";;
+"Insomnia") echo "";;
 "GitHub Desktop") echo "";;
 "Tower") echo "󰊢";;
-"SourceTree") echo "🌳";;
-"GitKraken") echo "🐙";;
-"TablePlus") echo "📊";;
-"Sequel Pro") echo "🗄️";;
-"MongoDB Compass") echo "🍃";;
+"SourceTree") echo "";;
+"GitKraken") echo "";;
+"TablePlus") echo "";;
+"Sequel Pro") echo "";;
+"MongoDB Compass") echo "";;
 
 # Design - More creative
 "Figma") echo "";;

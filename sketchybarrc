@@ -1,353 +1,101 @@
 #!/bin/bash
 
-# Enhanced Felix-inspired SketchyBar config
+# SketchyBar Configuration - MiragianCycle inspired with darker theme
+# Minimal orchestrator approach with modular item configuration
+
+# Plugin directory
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 
-# Enhanced Catppuccin Mocha palette
-export BLACK=0xff181926
-export WHITE=0xffcdd6f4
-export RED=0xfff38ba8
-export GREEN=0xffa6e3a1
-export BLUE=0xff89b4fa
-export YELLOW=0xfff9e2af
-export ORANGE=0xfffab387
-export MAGENTA=0xffcba6f7
-export GREY=0xff6c7086
-export SURFACE0=0xff313244
-export SURFACE1=0xff45475a
-export SURFACE2=0xff585b70
-export TRANSPARENT=0x00000000
+# Source color scheme and variables
+source "$HOME/.config/sketchybar/variables.sh"
 
-# Enhanced Bar Appearance
-export BAR_COLOR=0xdd11111b
-export ITEM_BG_COLOR=0xff313244
-export ACCENT_COLOR=$BLUE
-export HOVER_COLOR=0xff45475a
+# Enhanced Bar configuration with modern styling
+sketchybar --bar height=$BAR_HEIGHT                \
+                 blur_radius=30                     \
+                 position=top                       \
+                 sticky=on                          \
+                 padding_left=12                    \
+                 padding_right=12                   \
+                 color=$BAR_COLOR                   \
+                 corner_radius=12                   \
+                 y_offset=4                         \
+                 margin=4                           \
+                 shadow=on                          \
+                 topmost=window_above               \
+                 notch_width=200
 
-# Premium bar properties with advanced visual effects
-sketchybar --bar height=36        \
-                 blur_radius=50   \
-                 position=top     \
-                 sticky=on        \
-                 padding_left=16  \
-                 padding_right=16 \
-                 color=$BAR_COLOR \
-                 border_width=1   \
-                 border_color=$SURFACE2 \
-                 corner_radius=18 \
-                 margin=6         \
-                 y_offset=6       \
-                 shadow=on        \
-                 topmost=window_above \
-                 notch_width=200  \
-                 display=main
+# Default styling for all items
+sketchybar --default updates=when_shown             \
+                     icon.font="$FONT:Regular:15.0"  \
+                     icon.color=$ICON_COLOR          \
+                     icon.padding_left=$ICON_PADDINGS_NORMAL \
+                     icon.padding_right=$ICON_PADDINGS_NORMAL \
+                     icon.y_offset=0                 \
+                     label.font="$FONT:Semibold:13.0" \
+                     label.color=$LABEL_COLOR        \
+                     label.padding_left=$LABEL_PADDINGS_NORMAL \
+                     label.padding_right=$LABEL_PADDINGS_NORMAL \
+                     padding_left=$WIDGET_GAP_NORMAL \
+                     padding_right=$WIDGET_GAP_NORMAL \
+                     label.y_offset=0                \
+                     background.height=$WIDGET_HEIGHT \
+                     background.corner_radius=$CORNER_RADIUS \
+                     background.border_width=$BORDER_WIDTH \
+                     background.border_color=$SURFACE1 \
+                     popup.background.border_width=$BORDER_WIDTH \
+                     popup.background.corner_radius=$POPUP_CORNER_RADIUS \
+                     popup.background.border_color=$POPUP_BORDER_COLOR \
+                     popup.background.color=$POPUP_BACKGROUND_COLOR
 
-# Premium default item properties with enhanced depth
-sketchybar --default updates=when_shown                              \
-                     icon.font="sketchybar-app-font:Regular:16.0"   \
-                     icon.color=$WHITE                               \
-                     icon.padding_left=8                             \
-                     icon.padding_right=8                            \
-                     label.font="SF Pro:Semibold:13.0"              \
-                     label.color=$WHITE                              \
-                     label.padding_left=8                            \
-                     label.padding_right=8                           \
-                     padding_left=8                                  \
-                     padding_right=8                                 \
-                     background.height=30                            \
-                     background.corner_radius=10                     \
-                     background.color=$ITEM_BG_COLOR                 \
-                     background.border_width=1                       \
-                     background.border_color=$SURFACE1               \
-                     background.shadow.drawing=on                    \
-                     background.shadow.color=0x40000000              \
-                     background.shadow.angle=270                     \
-                     background.shadow.distance=2                    \
-                     popup.background.border_width=1                 \
-                     popup.background.corner_radius=12               \
-                     popup.background.border_color=$SURFACE2         \
-                     popup.background.color=$ITEM_BG_COLOR           \
-                     popup.background.shadow.drawing=on              \
-                     popup.background.shadow.color=0x80000000        \
-                     popup.background.shadow.angle=270               \
-                     popup.background.shadow.distance=8
+# Load individual item configurations - Left side
+source "$HOME/.config/sketchybar/items/apple.sh"
+source "$HOME/.config/sketchybar/items/spaces.sh"
+source "$HOME/.config/sketchybar/items/app_dock.sh"
+source "$HOME/.config/sketchybar/items/front_app.sh"
 
-# Left side - Apple logo with popup menu
-sketchybar --add item apple.logo left                               \
-           --set apple.logo icon="⌘"                                \
-                            icon.font="SF Pro:Black:20.0"           \
-                            icon.color=$BLUE                        \
-                            label.drawing=off                       \
-                            background.drawing=on                   \
-                            background.color=$ITEM_BG_COLOR         \
-                            background.corner_radius=12             \
-                            background.border_width=1               \
-                            background.border_color=$SURFACE1       \
-                            background.shadow.drawing=on            \
-                            background.shadow.color=0x4089b4fa      \
-                            background.shadow.angle=270             \
-                            background.shadow.distance=3            \
-                            padding_left=12                         \
-                            padding_right=12                        \
-                            click_script="$PLUGIN_DIR/apple.sh"     \
-                            script="$PLUGIN_DIR/apple_hover.sh"    \
-                            popup.background.color=$ITEM_BG_COLOR   \
-           --subscribe apple.logo mouse.clicked mouse.entered mouse.exited
+# Load center items
+source "$HOME/.config/sketchybar/items/media.sh"
 
-# Apple menu items
-sketchybar --add item apple.about popup.apple.logo                  \
-           --set apple.about icon="ℹ️"                               \
-                             label="About This Mac"                 \
-                             click_script="system_profiler SPSoftwareDataType | head -10 | osascript -e 'display dialog (do shell script \"cat\") with title \"About This Mac\"'"
+# Load right side items
+source "$HOME/.config/sketchybar/items/weather.sh"
+source "$HOME/.config/sketchybar/items/battery.sh"
+source "$HOME/.config/sketchybar/items/volume.sh"
+source "$HOME/.config/sketchybar/items/network.sh"
+source "$HOME/.config/sketchybar/items/cpu.sh"
+source "$HOME/.config/sketchybar/items/ram.sh"
+source "$HOME/.config/sketchybar/items/clock.sh"
+source "$HOME/.config/sketchybar/items/calendar.sh"
 
-sketchybar --add item apple.activity popup.apple.logo               \
-           --set apple.activity icon="📊"                           \
-                                label="Activity Monitor"            \
-                                click_script="open -a 'Activity Monitor'; sketchybar --set apple.logo popup.drawing=off"
+# Bracket grouping for visual consistency with optimized spacing
+sketchybar --add bracket weather_group weather \
+           --set weather_group background.drawing=off \
+                               padding_left=$GROUP_PADDING \
+                               padding_right=$WIDGET_GAP_LARGE
 
-sketchybar --add item apple.preferences popup.apple.logo            \
-           --set apple.preferences icon="⚙️"                         \
-                                   label="System Preferences"       \
-                                   click_script="open -a 'System Preferences'; sketchybar --set apple.logo popup.drawing=off"
+sketchybar --add bracket system_group battery volume network cpu ram \
+           --set system_group background.drawing=off \
+                              padding_left=$WIDGET_GAP_LARGE \
+                              padding_right=$WIDGET_GAP_LARGE
 
-sketchybar --add item apple.separator1 popup.apple.logo             \
-           --set apple.separator1 icon="─────────────────"           \
-                                  label.drawing=off                 \
-                                  background.drawing=off
+sketchybar --add bracket time_group clock calendar \
+           --set time_group background.drawing=off \
+                            padding_left=$WIDGET_GAP_LARGE \
+                            padding_right=$GROUP_PADDING
 
-sketchybar --add item apple.sleep popup.apple.logo                  \
-           --set apple.sleep icon="😴"                               \
-                             label="Sleep"                          \
-                             click_script="pmset sleepnow; sketchybar --set apple.logo popup.drawing=off"
+# Set up app session event handlers for dynamic updates
+# These events will trigger app session updates when applications change state
+sketchybar --add event app_session_update \
+           --trigger app_session_update
 
-sketchybar --add item apple.lock popup.apple.logo                   \
-           --set apple.lock icon="🔒"                                \
-                            label="Lock Screen"                     \
-                            click_script="/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend; sketchybar --set apple.logo popup.drawing=off"
+# Create a periodic update for app session (every 5 seconds)
+# This ensures the app session stays synchronized even if events are missed
+sketchybar --add item app_session.updater right \
+           --set app_session.updater drawing=off \
+                                    script="$HOME/.config/sketchybar/plugins/app_session.sh update" \
+                                    update_freq=5
 
-sketchybar --add item apple.separator2 popup.apple.logo             \
-           --set apple.separator2 icon="─────────────────"           \
-                                  label.drawing=off                 \
-                                  background.drawing=off
-
-sketchybar --add item apple.restart popup.apple.logo                \
-           --set apple.restart icon="🔄"                             \
-                               label="Restart"                      \
-                               click_script="osascript -e 'tell app \"System Events\" to restart'; sketchybar --set apple.logo popup.drawing=off"
-
-sketchybar --add item apple.shutdown popup.apple.logo               \
-           --set apple.shutdown icon="⏻"                             \
-                                label="Shut Down"                   \
-                                click_script="osascript -e 'tell app \"System Events\" to shut down'; sketchybar --set apple.logo popup.drawing=off"
-
-# Left side - Spaces with generous horizontal spacing
-SPACE_SIDS=(1 2 3 4 5 6 7 8 9 10)
-for sid in "${SPACE_SIDS[@]}"
-do
-  sketchybar --add space space.$sid left                                    \
-             --set space.$sid space=$sid                                     \
-                              icon=$sid                                      \
-                              icon.font="SF Pro:Bold:14.0"                  \
-                              icon.padding_left=12                           \
-                              icon.padding_right=6                           \
-                              label.font="sketchybar-app-font:Regular:14.0" \
-                              label.padding_left=6                           \
-                              label.padding_right=12                         \
-                              label.y_offset=-1                              \
-                              padding_left=10                                \
-                              padding_right=10                               \
-                              background.drawing=on                          \
-                              background.height=30                           \
-                              background.corner_radius=10                    \
-                              background.color=0xff313244                    \
-                              background.border_width=1                      \
-                              background.border_color=0xff45475a             \
-                              script="$PLUGIN_DIR/space.sh"                  \
-             --subscribe space.$sid mouse.clicked mouse.entered mouse.exited
-done
-
-# Add generous spacing between workspaces and other elements
-sketchybar --add item spaces_padding left                               \
-           --set spaces_padding icon=""                                  \
-                                label=""                                 \
-                                width=25                                 \
-                                background.drawing=off
-
-sketchybar --add item space_separator left                          \
-           --set space_separator icon="❯"                           \
-                                 icon.font="SF Pro:Heavy:16.0"      \
-                                 icon.color=$WHITE                  \
-                                 label.drawing=off                  \
-                                 associated_display=active          \
-                                 click_script="$PLUGIN_DIR/yabai.sh create_space" \
-                                 padding_left=10                    \
-                                 padding_right=10
-
-# Left side - Front App
-sketchybar --add item front_app left                                \
-           --set front_app    icon.font="sketchybar-app-font:Regular:16.0" \
-                              icon.color=$WHITE                     \
-                              label.color=$WHITE                    \
-                              background.drawing=on                 \
-                              padding_left=10                       \
-                              script="$PLUGIN_DIR/front_app.sh"     \
-           --subscribe front_app front_app_switched
-
-# Center - Media
-sketchybar --add item media center                                  \
-           --set media label.color=$WHITE                           \
-                       label.max_chars=20                           \
-                       icon.padding_left=0                          \
-                       scroll_texts=on                              \
-                       icon=                                       \
-                       icon.color=$GREEN                            \
-                       background.drawing=on                        \
-                       script="$PLUGIN_DIR/media.sh"               \
-           --subscribe media media_change
-
-# ===== NEXT-LEVEL RIGHT SIDE DESIGN =====
-
-# Weather group (leftmost) - Dynamic colors based on conditions
-sketchybar --add bracket weather_group weather_info                 \
-           --set weather_group background.drawing=on                \
-                               background.color=0xff6c7086          \
-                               background.corner_radius=20          \
-                               background.border_width=2            \
-                               background.border_color=0xffa6e3a1   \
-                               background.shadow.drawing=on         \
-                               background.shadow.color=0x80a6e3a1   \
-                               background.shadow.angle=270          \
-                               background.shadow.distance=8         \
-                               script="$PLUGIN_DIR/weather_hover.sh" \
-           --subscribe weather_group mouse.entered mouse.exited
-
-sketchybar --add item weather_info right                            \
-           --set weather_info script="$PLUGIN_DIR/weather_enhanced.sh" \
-                              update_freq=1800                      \
-                              icon.font="SF Pro:Bold:16.0"          \
-                              icon.color=0xffffffff                 \
-                              label.font="SF Pro:Bold:11.0"         \
-                              label.color=0xffffffff                \
-                              padding_left=10                       \
-                              padding_right=10                      \
-                              background.drawing=off                \
-                              click_script="$PLUGIN_DIR/weather.sh"
-
-# Add dramatic spacing
-sketchybar --add item weather_separator right                       \
-           --set weather_separator width=12 background.drawing=off
-
-# System status group (middle) - Performance themed
-sketchybar --add bracket status_group battery volume network system_stats \
-           --set status_group background.drawing=on                  \
-                              background.color=0xff313244            \
-                              background.corner_radius=20            \
-                              background.border_width=2              \
-                              background.border_color=0xfff9e2af     \
-                              background.shadow.drawing=on           \
-                              background.shadow.color=0x80f9e2af     \
-                              background.shadow.angle=270            \
-                              background.shadow.distance=8           \
-                              script="$PLUGIN_DIR/status_hover.sh"   \
-           --subscribe status_group mouse.entered mouse.exited
-
-# System stats (CPU + RAM combined)
-sketchybar --add item system_stats right                            \
-           --set system_stats script="$PLUGIN_DIR/system_stats.sh"  \
-                              update_freq=3                          \
-                              icon=""                               \
-                              icon.color=$BLUE                       \
-                              icon.font="SF Pro:Bold:14.0"           \
-                              label.font="SF Mono:Bold:11.0"         \
-                              label.color=0xffffffff                 \
-                              padding_left=8                         \
-                              padding_right=6                        \
-                              background.drawing=off
-
-# Network with SSID display
-sketchybar --add item network right                                 \
-           --set network script="$PLUGIN_DIR/network.sh"            \
-                         update_freq=5                              \
-                         icon.font="SF Pro:Bold:14.0"               \
-                         label.font="SF Pro:Semibold:11.0"          \
-                         label.color=0xffffffff                     \
-                         padding_left=6                             \
-                         padding_right=6                            \
-                         background.drawing=off                     \
-                         click_script="$PLUGIN_DIR/network.sh"      \
-           --subscribe network mouse.clicked wifi_change
-
-# Volume with percentage display
-sketchybar --add item volume right                                  \
-           --set volume script="$PLUGIN_DIR/volume.sh"              \
-                        click_script="$PLUGIN_DIR/volume_click.sh"  \
-                        icon.font="SF Pro:Bold:14.0"               \
-                        label.font="SF Pro:Semibold:11.0"          \
-                        label.color=0xffffffff                     \
-                        padding_left=6                             \
-                        padding_right=6                            \
-                        background.drawing=off                     \
-           --subscribe volume volume_change
-
-# Battery with percentage
-sketchybar --add item battery right                                 \
-           --set battery script="$PLUGIN_DIR/battery.sh"            \
-                         update_freq=120                            \
-                         icon.font="SF Pro:Bold:14.0"               \
-                         label.font="SF Pro:Semibold:11.0"          \
-                         label.color=0xffffffff                     \
-                         padding_left=6                             \
-                         padding_right=8                            \
-                         background.drawing=off                     \
-           --subscribe battery system_woke power_source_change
-
-# Add dramatic spacing
-sketchybar --add item main_separator right                          \
-           --set main_separator width=12 background.drawing=off
-
-# Time & Date group (rightmost) - Premium blue with pulsing effect
-sketchybar --add bracket time_group clock calendar                  \
-           --set time_group background.drawing=on                   \
-                            background.color=0xff89b4fa             \
-                            background.corner_radius=20             \
-                            background.border_width=3               \
-                            background.border_color=0xff74c7ec      \
-                            background.shadow.drawing=on            \
-                            background.shadow.color=0xaa89b4fa      \
-                            background.shadow.angle=270             \
-                            background.shadow.distance=10           \
-                            script="$PLUGIN_DIR/time_hover.sh"      \
-           --subscribe time_group mouse.entered mouse.exited system_woke
-
-# Calendar with enhanced date display
-sketchybar --add item calendar right                                \
-           --set calendar script="$PLUGIN_DIR/calendar.sh"          \
-                          update_freq=300                           \
-                          icon=""                                  \
-                          icon.color=0xffffffff                     \
-                          icon.font="SF Pro:Bold:14.0"              \
-                          label.font="SF Pro:Bold:11.0"             \
-                          label.color=0xffffffff                    \
-                          padding_left=8                            \
-                          padding_right=4                           \
-                          background.drawing=off                    \
-                          click_script="open -a Calendar"           \
-           --subscribe calendar mouse.entered mouse.exited
-
-# Clock with enhanced time display
-sketchybar --add item clock right                                   \
-           --set clock   update_freq=10                             \
-                         icon=""                                   \
-                         icon.color=0xffffffff                      \
-                         icon.font="SF Pro:Bold:14.0"               \
-                         label.color=0xffffffff                     \
-                         label.font="SF Pro:Bold:12.0"              \
-                         padding_left=4                             \
-                         padding_right=8                            \
-                         background.drawing=off                     \
-                         script="$PLUGIN_DIR/clock.sh"              \
-                         click_script="$PLUGIN_DIR/zen.sh"          \
-           --subscribe clock mouse.entered mouse.exited
-
-# Finalizing the setup
+# Update everything and log completion
+sketchybar --hotload on
 sketchybar --update
+
+echo "SketchyBar configuration loaded successfully!"

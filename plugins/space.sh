@@ -2,6 +2,7 @@
 
 # Enhanced space script with animations
 source "$CONFIG_DIR/colors.sh" 2>/dev/null || true
+source "$HOME/.config/sketchybar/variables.sh"
 
 update_space() {
   SPACE_ID=$(echo "$INFO" | jq -r '.space // empty')
@@ -84,7 +85,7 @@ update_space() {
     sketchybar --animate elastic 30 \
                --set $NAME background.drawing=on \
                            background.color=0xff89b4fa \
-                           background.height=36 \
+                           background.height=$WIDGET_HEIGHT \
                            background.border_color=0xff74c7ec \
                            background.border_width=3 \
                            background.shadow.drawing=on \
@@ -103,11 +104,11 @@ update_space() {
     if [ $app_count -gt 0 ]; then
       indicator="●"
       bg_color=0xff45475a
-      height=32
+      height=$((WIDGET_HEIGHT - 4))
     else
       indicator="○"  
       bg_color=0xff313244
-      height=30
+      height=$((WIDGET_HEIGHT - 6))
     fi
     
     sketchybar --animate elastic 25 \
@@ -130,14 +131,14 @@ update_space() {
 mouse_clicked() {
   # Dramatic click animation
   sketchybar --animate elastic 15 \
-             --set $NAME background.height=38 \
+             --set $NAME background.height=$((WIDGET_HEIGHT + 2)) \
                          background.border_width=4 \
                          background.shadow.distance=12
   
   # Quick bounce back
   sleep 0.1
   sketchybar --animate elastic 15 \
-             --set $NAME background.height=36 \
+             --set $NAME background.height=$WIDGET_HEIGHT \
                          background.border_width=3 \
                          background.shadow.distance=8
   
@@ -155,7 +156,7 @@ mouse_entered() {
                --set $NAME background.color=0xff74c7ec \
                            background.border_color=0xff89b4fa \
                            background.border_width=2 \
-                           background.height=34 \
+                           background.height=$((WIDGET_HEIGHT - 2)) \
                            background.shadow.drawing=on \
                            background.shadow.color=0x4074c7ec \
                            background.shadow.angle=270 \
@@ -170,10 +171,10 @@ mouse_exited() {
     # Determine background color and height based on app count
     if [ $app_count -gt 0 ]; then
       bg_color=0xff45475a
-      height=32
+      height=$((WIDGET_HEIGHT - 4))
     else
       bg_color=0xff313244
-      height=30
+      height=$((WIDGET_HEIGHT - 6))
     fi
     
     sketchybar --animate elastic 20 \

@@ -130,5 +130,3 @@ Feel free to submit issues and enhancement requests!
 This configuration is open source and available under the MIT License.
 
 ---
-
-🤖 *Generated with [opencode](https://opencode.ai)*

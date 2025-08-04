@@ -1,0 +1,13 @@
+{
+  "start_time": "",
+  "last_check": "",
+  "uptime": 0,
+  "checks_performed": 0,
+  "alerts_sent": 0,
+  "performance": {
+    "memory_usage": [],
+    "cpu_usage": [],
+    "plugin_performance": {}
+  },
+  "health_status": "unknown"
+}
