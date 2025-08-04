@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# SketchyBar Configuration - MiragianCycle inspired with darker theme
+# Minimal orchestrator approach with modular item configuration
+
+# Plugin directory
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+
+# Source color scheme and variables
+source "$HOME/.config/sketchybar/variables.sh"
+
+# Bar configuration
+sketchybar --bar height=30                         \
+                 blur_radius=30                     \
+                 position=top                       \
+                 sticky=on                          \
+                 padding_left=10                    \
+                 padding_right=10                   \
+                 color=$BAR_COLOR                   \
+                 corner_radius=12                   \
+                 y_offset=5                         \
+                 margin=0                           \
+                 shadow=on                          \
+                 topmost=window_above               \
+                 notch_width=200
+
+# Default styling for all items
+sketchybar --default updates=when_shown             \
+                     icon.font="$FONT:Regular:15.0"  \
+                     icon.color=$ICON_COLOR          \
+                     icon.padding_left=$ICON_PADDINGS \
+                     icon.padding_right=$ICON_PADDINGS \
+                     icon.y_offset=0                 \
+                     label.font="$FONT:Semibold:13.0" \
+                     label.color=$LABEL_COLOR        \
+                     label.padding_left=$LABEL_PADDINGS \
+                     label.padding_right=$LABEL_PADDINGS \
+                     label.y_offset=0                \
+                     background.height=28            \
+                     background.corner_radius=$CORNER_RADIUS \
+                     background.border_width=$BORDER_WIDTH \
+                     background.border_color=$SURFACE1 \
+                     popup.background.border_width=$BORDER_WIDTH \
+                     popup.background.corner_radius=$POPUP_CORNER_RADIUS \
+                     popup.background.border_color=$POPUP_BORDER_COLOR \
+                     popup.background.color=$POPUP_BACKGROUND_COLOR
+
+# Load individual item configurations - Left side
+source "$HOME/.config/sketchybar/items/apple.sh"
+source "$HOME/.config/sketchybar/items/spaces.sh"
+source "$HOME/.config/sketchybar/items/front_app.sh"
+
+# Load center items
+source "$HOME/.config/sketchybar/items/media.sh"
+
+# Load right side items
+source "$HOME/.config/sketchybar/items/weather.sh"
+source "$HOME/.config/sketchybar/items/battery.sh"
+source "$HOME/.config/sketchybar/items/volume.sh"
+source "$HOME/.config/sketchybar/items/network.sh"
+source "$HOME/.config/sketchybar/items/cpu.sh"
+source "$HOME/.config/sketchybar/items/ram.sh"
+source "$HOME/.config/sketchybar/items/clock.sh"
+source "$HOME/.config/sketchybar/items/calendar.sh"
+
+# Bracket grouping for visual consistency
+sketchybar --add bracket weather_group weather \
+           --set weather_group background.drawing=off
+
+sketchybar --add bracket system_group battery volume network cpu ram \
+           --set system_group background.drawing=off
+
+sketchybar --add bracket time_group clock calendar \
+           --set time_group background.drawing=off
+
+# Update everything and log completion
+sketchybar --hotload=on
+sketchybar --update
+
+echo "SketchyBar configuration loaded successfully!"

@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Backup files (keep the backups directory structure but ignore contents)
+backups/*/
+
+# Personal API keys or sensitive data
+*api_key*
+*secret*
+*token*
+
+# Cache files
+*.cache
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System files
+Icon?
