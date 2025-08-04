@@ -1,0 +1,11 @@
+agent_url: http://localhost:8000
+auth_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYWdhd2EiLCJzY29wZXMiOlsiYWdlbnQ6Y2hhdCJdLCJleHAiOjE3NTQyNzcxMjh9.lY4gHonN3w1CMatYo2lD_OzpjjMmNgnvEjjtwebdPdw
+base_url: https://api.openai.com
+log_level: info
+provider: openai
+tools:
+    - calculator
+    - search_web
+    - weather
+    - translate
+    - filesystem
