@@ -13,6 +13,44 @@ This directory contains the yabai window manager configuration with optimized se
 - **Mouse controls** with `fn` modifier for moving/resizing
 - **Window opacity** and smooth animations
 - **App exclusions** for problematic applications
+- **Rule-based space assignment** for automatic window organization
+
+## Space Assignment
+
+### Prerequisites
+**IMPORTANT**: Spaces must be manually created first in Mission Control before rules work:
+1. Open Mission Control (swipe up with 3-4 fingers or `F3`)
+2. Click `+` in top-right to create spaces (create at least 5 spaces)
+3. Restart yabai to apply rules
+
+### Default Space Layout
+| Space | Purpose | Applications |
+|-------|---------|--------------|
+| **1** | Terminals | Ghostty, iTerm2, Terminal, Alacritty, kitty, WezTerm |
+| **2** | Browsers | Safari, Chrome, Firefox, Brave, Arc, Edge |
+| **3** | Development | VS Code, Xcode, IntelliJ IDEA, PyCharm, WebStorm, Sublime Text |
+| **4** | Communication | Slack, Discord, Telegram, WhatsApp, Signal, Teams, Zoom |
+| **5** | Media & Design | Spotify, Music, Photos, Pixelmator, Affinity, Photoshop, Figma |
+
+### How It Works
+- When you open an app, yabai automatically sends it to its designated space
+- If the space doesn't exist, the app opens in the current space
+- Use `ctrl + arrow keys` or gestures to switch between spaces
+- Apps not in the rules will tile normally in the current space
+
+### Customizing Space Rules
+Edit `~/.config/yabai/yabairc` to modify space assignments:
+```bash
+# Example: Move all terminals to space 1
+yabai -m rule --add app="^(Ghostty|iTerm2)$" space=1
+```
+
+### macOS Sequoia Limitations
+⚠️ Due to disabled scripting addition:
+- ❌ Cannot auto-create new spaces
+- ❌ Cannot auto-focus spaces when apps open
+- ✅ Can route apps to pre-existing spaces
+- ✅ Manual space switching still works (ctrl+arrows)
 
 ## Keybinds (skhd)
 

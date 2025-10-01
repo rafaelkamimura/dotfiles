@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
-sudo yabai --load-sa
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# Scripting addition disabled - doesn't work on macOS Sequoia
+# sudo yabai --load-sa
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
-yabai -m config external_bar               all:36:0       \
+yabai -m config external_bar               all:0:38       \
                 mouse_follows_focus        off            \
                 focus_follows_mouse        off            \
                 window_zoom_persist        off            \
@@ -24,10 +25,10 @@ yabai -m config external_bar               all:36:0       \
                 mouse_drop_action          swap           \
                                                           \
                 top_padding                2              \
-                bottom_padding             15             \
-                left_padding               15             \
-                right_padding              15             \
-                window_gap                 10
+                bottom_padding             2              \
+                left_padding               0              \
+                right_padding              0              \
+                window_gap                 4
 
 # Exclude problematic apps from being managed:
 yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor|PopClip|Bartender 4|CleanMyMac|1Blocker- Ad Blocker & Privacy)$" manage=off
@@ -36,13 +37,32 @@ yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 
-# Window borders for better visual feedback
-yabai -m config window_border_width     2
-yabai -m config active_window_border_color   0xff775759
-yabai -m config normal_window_border_color   0xff553c54
-yabai -m config window_border_blur      off
-yabai -m config window_border_hidpi     on
-yabai -m config window_border_radius    12
+# Float iWork dialogs (Open, Save, Export)
+yabai -m rule --add app="^(Pages|Numbers|Keynote)$" title="^(Open|Save|Export|Choose|Import)$" manage=off
+# Float Finder entirely (causes tiling issues)
+yabai -m rule --add app="^Finder$" manage=off
+
+# Space assignment rules (requires spaces to be pre-created in Mission Control)
+# Space 1: Terminals
+yabai -m rule --add app="^(Ghostty|iTerm2|Terminal|Alacritty|kitty|WezTerm)$" space=1
+
+# Ghostty always zoom to fullscreen (not native fullscreen)
+yabai -m signal --add event=window_created app="^Ghostty$" action="yabai -m window $YABAI_WINDOW_ID --toggle zoom-fullscreen"
+
+# Space 2: Browsers
+yabai -m rule --add app="^(Safari|Google Chrome|Firefox|Brave Browser|Arc|Microsoft Edge)$" space=2
+
+# Space 3: Development (IDEs/Editors)
+yabai -m rule --add app="^(Code|Visual Studio Code|Xcode|IntelliJ IDEA|PyCharm|WebStorm|Sublime Text|Neovim|MacVim)$" space=3
+
+# Space 4: Communication
+yabai -m rule --add app="^(Slack|Discord|Telegram|.*WhatsApp|Signal|Microsoft Teams|Zoom)$" space=4
+
+# Space 5: Media & Design
+yabai -m rule --add app="^(Spotify|Music|Photos|Pixelmator|Affinity|Adobe Photoshop|Figma)$" space=5
+
+# Window borders disabled
+yabai -m config window_border_width     0
 
 yabai -m config layout bsp
 
