@@ -37,3 +37,9 @@ vim.api.nvim_create_autocmd("User", {
     vim.opt.clipboard = "unnamedplus"
   end,
 })
+
+-- =============================================================================
+-- Project-Specific Settings
+-- Create .nvim.lua in any project root for local settings (e.g., tabstop, formatters)
+-- =============================================================================
+vim.opt.exrc = true

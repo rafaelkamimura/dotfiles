@@ -11,6 +11,7 @@ return {
         -- Core groups
         { "<leader>a", group = "ai/copilot" },
         { "<leader>c", group = "code" },
+        { "<leader>q", group = "session/quit" },
         { "<leader>d", group = "debug" },
         { "<leader>f", group = "file/find" },
         { "<leader>g", group = "goto/git" },

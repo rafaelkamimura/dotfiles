@@ -113,3 +113,21 @@ map("c", "<D-v>", '<C-r>+', { desc = "Paste" })
 -- LSP Peek Definition
 -- NOTE: <leader>vd is defined in plugins/lsp-keybinds.lua using lazy.nvim keys
 -- =============================================================================
+
+-- =============================================================================
+-- Session Management (persistence.nvim - built into LazyVim)
+-- =============================================================================
+map("n", "<leader>qs", function() require("persistence").load() end, { desc = "Restore Session" })
+map("n", "<leader>qS", function() require("persistence").select() end, { desc = "Select Session" })
+map("n", "<leader>ql", function() require("persistence").load({ last = true }) end, { desc = "Restore Last Session" })
+map("n", "<leader>qd", function() require("persistence").stop() end, { desc = "Don't Save Current Session" })
+
+-- =============================================================================
+-- Trouble.nvim (diagnostics & quickfix - built into LazyVim)
+-- =============================================================================
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+map("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+map("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions/References (Trouble)" })
+map("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+map("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
