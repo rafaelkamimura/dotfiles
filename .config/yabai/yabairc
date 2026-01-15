@@ -1,75 +1,203 @@
 #!/usr/bin/env sh
 
-# Scripting addition disabled - doesn't work on macOS Sequoia
-# sudo yabai --load-sa
-# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# ============================================================================
+# YABAI CONFIG - Optimized for macOS Tahoe (26.0+)
+# Hyprland-like snappy window management experience
+# ============================================================================
 
-yabai -m config external_bar               all:0:38       \
-                mouse_follows_focus        off            \
-                focus_follows_mouse        off            \
-                window_zoom_persist        off            \
-                window_placement           second_child   \
-                window_shadow              float          \
-                window_opacity             on             \
-                window_opacity_duration    0.2            \
-                active_window_opacity      1.0            \
-                normal_window_opacity      0.8            \
-                window_animation_duration  0.5            \
-                window_animation_easing    ease_out_quint \
-                insert_feedback_color      0xff9dd274     \
-                split_ratio                0.50           \
-                auto_balance               off            \
-                mouse_modifier             fn             \
-                mouse_action1              move           \
-                mouse_action2              resize         \
-                mouse_drop_action          swap           \
-                                                          \
-                top_padding                2              \
-                bottom_padding             2              \
-                left_padding               0              \
-                right_padding              0              \
-                window_gap                 4
+# Scripting addition - DISABLED for macOS Tahoe compatibility
+# Note: Scripting addition is currently broken on Tahoe
+# This means some features won't work (auto-focus on space switch, auto-create spaces)
+# But core tiling functionality works perfectly!
 
-# Exclude problematic apps from being managed:
-yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor|PopClip|Bartender 4|CleanMyMac|1Blocker- Ad Blocker & Privacy)$" manage=off
-yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
-yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
-yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
-yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
+# ============================================================================
+# CORE WINDOW MANAGEMENT - Optimized for speed and responsiveness
+# ============================================================================
 
-# Float iWork dialogs (Open, Save, Export)
-yabai -m rule --add app="^(Pages|Numbers|Keynote)$" title="^(Open|Save|Export|Choose|Import)$" manage=off
-# Float Finder entirely (causes tiling issues)
-yabai -m rule --add app="^Finder$" manage=off
+yabai -m config \
+    layout                       bsp                \
+    \
+    `# Window Placement` \
+    window_placement             second_child       \
+    window_origin_display        default            \
+    window_zoom_persist          on                 \
+    split_ratio                  0.50               \
+    split_type                   auto               \
+    auto_balance                 off                \
+    \
+    `# Focus Behavior - Hyprland-like` \
+    mouse_follows_focus          off                \
+    focus_follows_mouse          off                \
+    \
+    `# Window Visual Effects - FAST animations` \
+    window_shadow                float              \
+    window_opacity               on                 \
+    window_opacity_duration      0.1                \
+    active_window_opacity        1.0                \
+    normal_window_opacity        0.85               \
+    window_animation_duration    0.2                \
+    window_animation_easing      ease_out_expo      \
+    window_animation_frame_rate  120                \
+    \
+    `# Window Borders - Minimal and clean` \
+    window_border                off                \
+    window_border_width          0                  \
+    \
+    `# Spacing - Tight gaps like Hyprland` \
+    top_padding                  4                  \
+    bottom_padding               4                  \
+    left_padding                 4                  \
+    right_padding                4                  \
+    window_gap                   6                  \
+    \
+    `# External Bar - Sketchybar` \
+    external_bar                 all:0:38           \
+    \
+    `# Mouse Controls` \
+    mouse_modifier               fn                 \
+    mouse_action1                move               \
+    mouse_action2                resize             \
+    mouse_drop_action            swap               \
+    \
+    `# Visual Feedback` \
+    insert_feedback_color        0xff9dd274
 
-# Space assignment rules (requires spaces to be pre-created in Mission Control)
-# Space 1: Terminals
+# ============================================================================
+# APPLICATION RULES - Float problematic apps
+# ============================================================================
+
+# ============================================================================
+# SYSTEM DIALOGS - Native macOS file pickers and system panels
+# ============================================================================
+
+# Native macOS file dialogs (Save/Open panels) - MUST be first!
+# These have subrole AXDialog and need special handling
+yabai -m rule --add subrole="^AXDialog$" manage=off grid=8:8:1:1:6:6
+yabai -m rule --add subrole="^AXSystemDialog$" manage=off grid=8:8:1:1:6:6
+
+# System standard dialogs (alerts, confirmations)
+yabai -m rule --add subrole="^AXStandardWindow$" title="^(Open|Save|Choose|Import|Export|Select).*$" manage=off grid=8:8:1:1:6:6
+
+# System and utility apps that don't tile well
+yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor|PopClip|Bartender 4|CleanMyMac|1Blocker- Ad Blocker & Privacy|Installer)$" manage=off grid=6:6:1:1:4:4
+
+# Finder - Float all windows and center them
+yabai -m rule --add app="^Finder$" manage=off grid=8:8:1:1:6:6
+
+# Safari preferences and dialogs - centered
+yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off grid=8:8:1:1:6:6
+
+# System dialogs - centered
+yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off grid=6:6:1:1:4:4
+
+# iWork suite dialogs - centered
+yabai -m rule --add app="^(Pages|Numbers|Keynote)$" title="^(Open|Save|Export|Choose|Import)$" manage=off grid=8:8:1:1:6:6
+
+# Design app dialogs - centered
+yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off grid=8:8:1:1:6:6
+
+# Common file dialogs - centered and sized appropriately
+yabai -m rule --add title="^(Open|Save|Choose|Import|Export)$" manage=off grid=8:8:1:1:6:6
+
+# Preferences windows - centered
+yabai -m rule --add title="^(Preferences|Settings)$" manage=off grid=8:8:1:1:6:6
+
+# ============================================================================
+# WORKSPACE RULES - Auto-organize apps by workspace
+# NOTE: Requires spaces to be manually created in Mission Control first!
+# ============================================================================
+
+# Workspace 1: Terminals - Your primary development workspace
 yabai -m rule --add app="^(Ghostty|iTerm2|Terminal|Alacritty|kitty|WezTerm)$" space=1
 
-# Ghostty always zoom to fullscreen (not native fullscreen)
-yabai -m signal --add event=window_created app="^Ghostty$" action="yabai -m window $YABAI_WINDOW_ID --toggle zoom-fullscreen"
-
-# Space 2: Browsers
+# Workspace 2: Browsers - Web research and documentation
 yabai -m rule --add app="^(Safari|Google Chrome|Firefox|Brave Browser|Arc|Microsoft Edge)$" space=2
 
-# Space 3: Development (IDEs/Editors)
+# Workspace 3: Development - IDEs and editors
 yabai -m rule --add app="^(Code|Visual Studio Code|Xcode|IntelliJ IDEA|PyCharm|WebStorm|Sublime Text|Neovim|MacVim)$" space=3
 
-# Space 4: Communication
+# Workspace 4: Communication - Stay connected
 yabai -m rule --add app="^(Slack|Discord|Telegram|.*WhatsApp|Signal|Microsoft Teams|Zoom)$" space=4
 
-# Space 5: Media & Design
+# Workspace 5: Media & Design - Creative work
 yabai -m rule --add app="^(Spotify|Music|Photos|Pixelmator|Affinity|Adobe Photoshop|Figma)$" space=5
 
-# Window borders disabled
-yabai -m config window_border_width     0
+# ============================================================================
+# SHEET DIALOG WORKAROUND - Center parent windows
+# ============================================================================
 
-yabai -m config layout bsp
+# Claude Desktop - Keep centered for better sheet dialog positioning
+# Sheet dialogs (file pickers) follow parent window position
+# By keeping Claude centered, dialogs appear centered too
+# Note: Uncomment if you want Claude always centered
+# yabai -m rule --add app="^Claude$" grid=6:6:1:1:4:4
 
-# Enhanced sketchybar integration signals
-yabai -m signal --add event=space_changed action="sketchybar --trigger space_change"
-yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
-yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
-yabai -m signal --add event=window_moved action="sketchybar --trigger windows_on_spaces"
+# ============================================================================
+# SIGNALS - Auto-behaviors and integrations
+# ============================================================================
 
-echo "yabai configuration loaded.."
+# Auto-fullscreen Ghostty terminal (Hyprland-style)
+yabai -m signal --add event=window_created app="^Ghostty$" \
+    action="yabai -m window $YABAI_WINDOW_ID --toggle zoom-fullscreen"
+
+# Auto-center floating windows and dialogs
+# This centers ANY window that is created as floating/unmanaged
+yabai -m signal --add event=window_created \
+    action='
+        WINDOW_INFO=$(yabai -m query --windows --window $YABAI_WINDOW_ID)
+        IS_FLOATING=$(echo "$WINDOW_INFO" | jq -r ".\"is-floating\"")
+        SUBROLE=$(echo "$WINDOW_INFO" | jq -r ".subrole")
+
+        # Center if floating OR if it is a system dialog
+        if [[ "$IS_FLOATING" == "true" ]] || [[ "$SUBROLE" == "AXDialog" ]] || [[ "$SUBROLE" == "AXSystemDialog" ]]; then
+            yabai -m window $YABAI_WINDOW_ID --grid 8:8:1:1:6:6 2>/dev/null || true
+        fi
+    '
+
+# Re-center when window is deminimized
+yabai -m signal --add event=window_deminimized \
+    action='
+        WINDOW_INFO=$(yabai -m query --windows --window $YABAI_WINDOW_ID)
+        IS_FLOATING=$(echo "$WINDOW_INFO" | jq -r ".\"is-floating\"")
+
+        if [[ "$IS_FLOATING" == "true" ]]; then
+            yabai -m window $YABAI_WINDOW_ID --grid 8:8:1:1:6:6 2>/dev/null || true
+        fi
+    '
+
+# Force center dialogs when they receive focus
+yabai -m signal --add event=window_focused \
+    action='
+        WINDOW_INFO=$(yabai -m query --windows --window $YABAI_WINDOW_ID)
+        SUBROLE=$(echo "$WINDOW_INFO" | jq -r ".subrole")
+
+        # If this is a dialog, force center it
+        if [[ "$SUBROLE" == "AXDialog" ]] || [[ "$SUBROLE" == "AXSystemDialog" ]]; then
+            yabai -m window $YABAI_WINDOW_ID --grid 8:8:1:1:6:6 2>/dev/null || true
+        fi
+    '
+
+# Sketchybar integration - Real-time bar updates
+yabai -m signal --add event=space_changed \
+    action="sketchybar --trigger space_change"
+
+yabai -m signal --add event=window_created \
+    action="sketchybar --trigger windows_on_spaces"
+
+yabai -m signal --add event=window_destroyed \
+    action="sketchybar --trigger windows_on_spaces"
+
+yabai -m signal --add event=window_moved \
+    action="sketchybar --trigger windows_on_spaces"
+
+yabai -m signal --add event=window_focused \
+    action="sketchybar --trigger window_focus"
+
+yabai -m signal --add event=application_front_switched \
+    action="sketchybar --trigger front_app_switched"
+
+# ============================================================================
+# STARTUP COMPLETE
+# ============================================================================
+
+echo "yabai: configuration loaded successfully (macOS Tahoe optimized)"

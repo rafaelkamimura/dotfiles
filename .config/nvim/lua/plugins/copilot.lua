@@ -70,12 +70,23 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "main",
-    cmd = "CopilotChat",
-    opts = {
-      debug = false, -- Enable debugging
-      -- See Configuration section for rest
+    cmd = {
+      "CopilotChat",
+      "CopilotChatOpen",
+      "CopilotChatClose",
+      "CopilotChatToggle",
+      "CopilotChatStop",
+      "CopilotChatReset",
+      "CopilotChatExplain",
+      "CopilotChatReview",
+      "CopilotChatFix",
+      "CopilotChatOptimize",
+      "CopilotChatDocs",
+      "CopilotChatTests",
     },
-    -- See Commands section for default commands if you want to lazy load on them
+    opts = {
+      debug = false,
+    },
   },
 
   -- Integration with blink.cmp completion engine
