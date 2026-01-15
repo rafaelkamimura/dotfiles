@@ -14,17 +14,12 @@ local map = vim.keymap.set
 -- Ctrl+]: Dismiss suggestion
 -- Alt+Enter: Open Copilot panel
 
--- Copilot Chat keymaps (using <leader>a for AI/Assistant - avoids LSP conflicts)
-map("n", "<leader>aa", "<cmd>CopilotChat<CR>", { desc = "CopilotChat - Open chat" })
-map("v", "<leader>aa", "<cmd>CopilotChatExplain<CR>", { desc = "CopilotChat - Explain selection" })
-map("v", "<leader>ar", "<cmd>CopilotChatReview<CR>", { desc = "CopilotChat - Review selection" })
-map("v", "<leader>af", "<cmd>CopilotChatFix<CR>", { desc = "CopilotChat - Fix selection" })
-map("v", "<leader>ao", "<cmd>CopilotChatOptimize<CR>", { desc = "CopilotChat - Optimize selection" })
-map("v", "<leader>ad", "<cmd>CopilotChatDocs<CR>", { desc = "CopilotChat - Document selection" })
-map("v", "<leader>at", "<cmd>CopilotChatTests<CR>", { desc = "CopilotChat - Generate tests" })
-map("n", "<leader>ap", "<cmd>CopilotChatToggle<CR>", { desc = "CopilotChat - Toggle chat" })
+-- OpenCode.nvim keymaps are defined in plugins/opencode.lua
+-- <leader>aa - Open prompt
+-- <leader>ap - Toggle panel
+-- <C-.> - Toggle interface
 
--- Copilot controls
+-- Copilot inline suggestion controls
 map("n", "<leader>as", "<cmd>Copilot status<CR>", { desc = "Copilot - Status" })
 map("n", "<leader>aE", "<cmd>Copilot enable<CR>", { desc = "Copilot - Enable" })
 map("n", "<leader>aD", "<cmd>Copilot disable<CR>", { desc = "Copilot - Disable" })

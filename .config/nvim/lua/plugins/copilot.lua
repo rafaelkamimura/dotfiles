@@ -66,29 +66,6 @@ return {
     },
   },
 
-  -- Copilot Chat for AI-powered conversations
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "main",
-    cmd = {
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatClose",
-      "CopilotChatToggle",
-      "CopilotChatStop",
-      "CopilotChatReset",
-      "CopilotChatExplain",
-      "CopilotChatReview",
-      "CopilotChatFix",
-      "CopilotChatOptimize",
-      "CopilotChatDocs",
-      "CopilotChatTests",
-    },
-    opts = {
-      debug = false,
-    },
-  },
-
   -- Integration with blink.cmp completion engine
   {
     "giuxtaposition/blink-cmp-copilot",
