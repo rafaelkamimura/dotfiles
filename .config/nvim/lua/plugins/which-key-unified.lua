@@ -15,6 +15,7 @@ return {
         { "<leader>d", group = "debug" },
         { "<leader>f", group = "file/find" },
         { "<leader>g", group = "goto/git" },
+        { "<leader>gh", group = "git hunks" },
         { "<leader>s", group = "search/symbols" },
         { "<leader>t", group = "test" },
         { "<leader>w", group = "windows" },
